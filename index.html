@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShipIntel AI - Global Logistics & Freight Tracking</title>
+    <title>ShipIntel AI - Global Logistics Intelligence</title>
     <style>
         :root {
             --bg: #0b1329;
@@ -15,78 +15,176 @@
             --success: #10b981;
             --warning: #f59e0b;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Arial, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); padding: 25px; line-height: 1.5; min-height: 100vh; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 24px;
+        }
         .container { max-width: 1100px; margin: 0 auto; }
-        header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #1e293b; }
-        .brand-box { display: flex; align-items: center; gap: 15px; }
-        .brand { font-size: 28px; font-weight: 900; letter-spacing: 0.5px; }
-        .brand span { color: var(--primary); }
-        .tagline { color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: 1px; }
-        .lang-btn { background: #1e293b; color: var(--primary); border: 1px solid var(--primary); padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 14px; }
-        .lang-btn:hover { background: var(--primary); color: #0b1329; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin: 25px 0; }
-        .stat-card { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid #1e293b; }
-        .stat-card h3 { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-        .stat-card .num { font-size: 26px; font-weight: bold; color: var(--text); }
-        .search-box { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid #1e293b; margin-bottom: 25px; display: flex; gap: 10px; }
-        .search-box input { flex: 1; padding: 12px 15px; border-radius: 8px; border: 1px solid #334155; background: #0b1329; color: #fff; font-size: 15px; }
-        .search-box button { background: var(--primary); color: #0b1329; border: none; padding: 0 25px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px; }
-        table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid #1e293b; }
-        th, td { padding: 14px 16px; border-bottom: 1px solid #1e293b; font-size: 14px; }
-        th { background: #0e172e; color: var(--muted); font-size: 13px; }
-        .badge { padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
-        .badge-success { background: rgba(16, 185, 129, 0.2); color: var(--success); }
-        .badge-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
-        .no-data { text-align: center; padding: 25px; color: var(--muted); }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .logo-box h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+        }
+        .logo-box h1 span { color: var(--primary); }
+        .logo-box p {
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+        }
+        .btn-lang {
+            background-color: var(--primary);
+            color: #0b1329;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background-color: var(--card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-card .label { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+        .stat-card .val { font-size: 28px; font-weight: bold; }
+        .val-total { color: #fff; }
+        .val-sea { color: var(--primary); }
+        .val-customs { color: var(--warning); }
+        .val-done { color: var(--success); }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            background-color: var(--card);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 24px;
+        }
+        .search-btn {
+            background-color: var(--primary);
+            color: #0b1329;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            text-align: start;
+        }
+
+        .table-container {
+            background-color: var(--card);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 14px 18px;
+            text-align: start;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        th { color: var(--muted); font-weight: 600; }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .badge-sea { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-customs { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="brand-box">
-                <div>
-                    <div class="brand">Ship<span>Intel</span> <span>AI</span></div>
-                    <div class="tagline" id="taglineText">ENTERPRISE LOGISTICS INTELLIGENCE</div>
-                </div>
+        <div class="header">
+            <button id="langToggleBtn" class="btn-lang" onclick="toggleLanguage()">English</button>
+            <div class="logo-box">
+                <h1>Ship<span>Intel</span> AI</h1>
+                <p id="tagline">ENTERPRISE LOGISTICS INTELLIGENCE</p>
             </div>
-            <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">English</button>
-        </header>
+        </div>
 
         <div class="stats-grid">
-            <div class="stat-card"><h3 id="stat1Label">إجمالي الشحنات المدارة</h3><div class="num">1,248</div></div>
-            <div class="stat-card"><h3 id="stat2Label">حاويات في عرض البحر</h3><div class="num" style="color: var(--primary);">42</div></div>
-            <div class="stat-card"><h3 id="stat3Label">شحنات قيد التخليص الجمركي</h3><div class="num" style="color: var(--warning);">18</div></div>
-            <div class="stat-card"><h3 id="stat4Label">تم التسليم بنجاح</h3><div class="num" style="color: var(--success);">1,188</div></div>
+            <div class="stat-card">
+                <div class="label" id="stat1Label">إجمالي الشحنات المدارة</div>
+                <div class="val val-total">1,248</div>
+            </div>
+            <div class="stat-card">
+                <div class="label" id="stat2Label">حاويات في عرض البحر</div>
+                <div class="val val-sea">42</div>
+            </div>
+            <div class="stat-card">
+                <div class="label" id="stat3Label">شحنات قيد التخليص الجمركي</div>
+                <div class="val val-customs">18</div>
+            </div>
+            <div class="stat-card">
+                <div class="label" id="stat4Label">تم التسليم بنجاح</div>
+                <div class="val val-done">1,188</div>
+            </div>
         </div>
 
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="أدخل رقم بوليصة الشحن (B/L) أو رقم الحاوية...">
-            <button id="searchBtn" onclick="performSearch()">تتبع الشحنة</button>
+            <button class="search-btn" id="searchBtn" onclick="performSearch()">تتبع الشحنة</button>
+            <input type="text" id="searchInput" class="search-input" placeholder="أدخل رقم بوليصة الشحن (B/L) أو رقم الحاوية...">
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th id="thBL">رقم البوليصة</th>
-                    <th id="thContainer">الحاوية</th>
-                    <th id="thOrigin">ميناء المغادرة</th>
-                    <th id="thDest">ميناء الوصول</th>
-                    <th id="thETA">موعد الوصول المتوقع</th>
-                    <th id="thStatus">الحالة</th>
-                </tr>
-            </thead>
-            <tbody id="shipmentTableBody">
-                <!-- Dynamically populated -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th id="thBL">رقم البوليصة</th>
+                        <th id="thContainer">الحاوية</th>
+                        <th id="thOrigin">ميناء المغادرة</th>
+                        <th id="thDest">ميناء الوصول</th>
+                        <th id="thETA">موعد الوصول المتوقع</th>
+                        <th id="thStatus">الحالة</th>
+                    </tr>
+                </thead>
+                <tbody id="shipmentsTable"></tbody>
+            </table>
+        </div>
     </div>
 
     <script>
         const translations = {
             ar: {
                 tagline: "ENTERPRISE LOGISTICS INTELLIGENCE",
-                langBtn: "English",
+                btnText: "English",
                 stat1: "إجمالي الشحنات المدارة",
                 stat2: "حاويات في عرض البحر",
                 stat3: "شحنات قيد التخليص الجمركي",
@@ -99,75 +197,73 @@
                 thDest: "ميناء الوصول",
                 thETA: "موعد الوصول المتوقع",
                 thStatus: "الحالة",
-                statusTransit: "في الطريق البحري",
-                statusCleared: "تم الفسح الجمركي",
-                noResults: "لم يتم العثور على شحنة مطابقة لهذا الرقم."
+                statusSea: "في الطريق البحري",
+                statusCustoms: "تم الفسح الجمركي"
             },
             en: {
                 tagline: "ENTERPRISE LOGISTICS INTELLIGENCE",
-                langBtn: "العربية",
+                btnText: "عربي",
                 stat1: "Total Managed Shipments",
-                stat2: "Containers In Transit",
-                stat3: "Customs Clearance",
+                stat2: "Containers at Sea",
+                stat3: "Under Customs Clearance",
                 stat4: "Successfully Delivered",
-                searchPlaceholder: "Enter B/L Number or Container ID...",
+                searchPlaceholder: "Enter Bill of Lading (B/L) or Container Number...",
                 searchBtn: "Track Shipment",
                 thBL: "B/L Number",
-                thContainer: "Container No.",
-                thOrigin: "Port of Origin",
-                thDest: "Port of Destination",
-                thETA: "Estimated Arrival (ETA)",
+                thContainer: "Container",
+                thOrigin: "Port of Loading",
+                thDest: "Port of Discharge",
+                thETA: "Expected ETA",
                 thStatus: "Status",
-                statusTransit: "In Maritime Transit",
-                statusCleared: "Customs Cleared",
-                noResults: "No shipment found matching this query."
+                statusSea: "In Transit at Sea",
+                statusCustoms: "Customs Cleared"
             }
         };
 
         const shipments = [
-            { bl: "MSKU-982341", container: "MSKU7382910", origin_ar: "شنغهاي (الصين)", origin_en: "Shanghai (China)", dest_ar: "عدن / المكلا", dest_en: "Aden / Mukalla", eta: "2026-11-02", status: "transit" },
-            { bl: "CMAU-441029", container: "CMAU1029384", origin_ar: "جبل علي (دبي)", origin_en: "Jebel Ali (Dubai)", dest_ar: "جدة الإسلامي", dest_en: "Jeddah Port", eta: "2026-10-24", status: "cleared" },
-            { bl: "HLCU-109283", container: "HLCU5562019", origin_ar: "إسطنبول (تركيا)", origin_en: "Istanbul (Turkey)", dest_ar: "الحديدة / المكلا", dest_en: "Hodeidah / Mukalla", eta: "2026-11-10", status: "transit" }
+            {
+                bl: "MSKU-982341",
+                container: "MSKU7382910",
+                origin_ar: "شنغهاي (الصين)", origin_en: "Shanghai (China)",
+                dest_ar: "عدن / المكلا", dest_en: "Aden / Mukalla",
+                eta: "2026-11-02",
+                status: "sea"
+            },
+            {
+                bl: "CMAU-441029",
+                container: "CMAU1029384",
+                origin_ar: "جبل علي (دبي)", origin_en: "Jebel Ali (Dubai)",
+                dest_ar: "جدة الإسلامي", dest_en: "Jeddah Islamic Port",
+                eta: "2026-10-24",
+                status: "customs"
+            },
+            {
+                bl: "HLCU-109283",
+                container: "HLCU5562019",
+                origin_ar: "إسطنبول (تركيا)", origin_en: "Istanbul (Turkey)",
+                dest_ar: "الحديدة / المكلا", dest_en: "Hodeidah / Mukalla",
+                eta: "2026-11-10",
+                status: "sea"
+            }
         ];
 
         let currentLang = 'ar';
 
-        function renderTable(data) {
-            const tbody = document.getElementById("shipmentTableBody");
-            tbody.innerHTML = "";
-            if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="no-data">${translations[currentLang].noResults}</td></tr>`;
-                return;
-            }
-            data.forEach(item => {
-                const tr = document.createElement("tr");
-                const origin = currentLang === 'ar' ? item.origin_ar : item.origin_en;
-                const dest = currentLang === 'ar' ? item.dest_ar : item.dest_en;
-                const statusBadge = item.status === 'transit'
-                    ? `<span class="badge badge-warning">${translations[currentLang].statusTransit}</span>`
-                    : `<span class="badge badge-success">${translations[currentLang].statusCleared}</span>`;
-
-                tr.innerHTML = `
-                    <td><strong>${item.bl}</strong></td>
-                    <td>${item.container}</td>
-                    <td>${origin}</td>
-                    <td>${dest}</td>
-                    <td>${item.eta}</td>
-                    <td>${statusBadge}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
         function applyLanguage(lang) {
             currentLang = lang;
             const root = document.getElementById("htmlRoot");
-            root.setAttribute("lang", lang);
-            root.setAttribute("dir", lang === 'ar' ? 'rtl' : 'ltr');
+
+            if (lang === 'ar') {
+                root.setAttribute("lang", "ar");
+                root.setAttribute("dir", "rtl");
+            } else {
+                root.setAttribute("lang", "en");
+                root.setAttribute("dir", "ltr");
+            }
 
             const t = translations[lang];
-            document.getElementById("taglineText").innerText = t.tagline;
-            document.getElementById("langToggleBtn").innerText = t.langBtn;
+            document.getElementById("langToggleBtn").innerText = t.btnText;
+            document.getElementById("tagline").innerText = t.tagline;
             document.getElementById("stat1Label").innerText = t.stat1;
             document.getElementById("stat2Label").innerText = t.stat2;
             document.getElementById("stat3Label").innerText = t.stat3;
@@ -185,19 +281,40 @@
         }
 
         function toggleLanguage() {
-            const nextLang = currentLang === 'ar' ? 'en' : 'ar';
+            const nextLang = (currentLang === 'ar') ? 'en' : 'ar';
             applyLanguage(nextLang);
         }
 
+        function renderTable(data) {
+            const tbody = document.getElementById("shipmentsTable");
+            tbody.innerHTML = "";
+            const t = translations[currentLang];
+
+            data.forEach(item => {
+                const tr = document.createElement("tr");
+                const origin = (currentLang === 'ar') ? item.origin_ar : item.origin_en;
+                const dest = (currentLang === 'ar') ? item.dest_ar : item.dest_en;
+                const statusBadge = item.status === 'sea' 
+                    ? `<span class="badge badge-sea">${t.statusSea}</span>` 
+                    : `<span class="badge badge-customs">${t.statusCustoms}</span>`;
+
+                tr.innerHTML = `
+                    <td><strong>${item.bl}</strong></td>
+                    <td>${item.container}</td>
+                    <td>${origin}</td>
+                    <td>${dest}</td>
+                    <td>${item.eta}</td>
+                    <td>${statusBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
         function performSearch() {
-            const query = document.getElementById("searchInput").value.trim().toLowerCase();
-            if (!query) {
-                renderTable(shipments);
-                return;
-            }
+            const val = document.getElementById("searchInput").value.trim().toLowerCase();
             const filtered = shipments.filter(s => 
-                s.bl.toLowerCase().includes(query) || 
-                s.container.toLowerCase().includes(query)
+                s.bl.toLowerCase().includes(val) || 
+                s.container.toLowerCase().includes(val)
             );
             renderTable(filtered);
         }
@@ -207,8 +324,7 @@
             if (this.value === "") renderTable(shipments);
         });
 
-        // Initialize
         applyLanguage('ar');
     </script>
 </body>
-</html>
+            </html>
