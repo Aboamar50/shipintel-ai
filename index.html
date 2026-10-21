@@ -132,7 +132,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <button id="langToggleBtn" class="btn-lang" onclick="toggleLanguage()">English</button>
+            <!-- تم ضبط الزر في البداية ليكون عربي لأن الصفحة عربي -->
+            <button id="langToggleBtn" class="btn-lang" onclick="toggleLanguage()">عربي</button>
             <div class="logo-box">
                 <h1>Ship<span>Intel</span> AI</h1>
                 <p id="tagline">ENTERPRISE LOGISTICS INTELLIGENCE</p>
@@ -184,7 +185,7 @@
         const translations = {
             ar: {
                 tagline: "ENTERPRISE LOGISTICS INTELLIGENCE",
-                btnText: "English",
+                btnText: "عربي", // عندما تكون الصفحة عربي يُكتب على الزر عربي
                 stat1: "إجمالي الشحنات المدارة",
                 stat2: "حاويات في عرض البحر",
                 stat3: "شحنات قيد التخليص الجمركي",
@@ -202,7 +203,7 @@
             },
             en: {
                 tagline: "ENTERPRISE LOGISTICS INTELLIGENCE",
-                btnText: "عربي",
+                btnText: "English", // عندما تكون الصفحة إنجليزي يُكتب على الزر English
                 stat1: "Total Managed Shipments",
                 stat2: "Containers at Sea",
                 stat3: "Under Customs Clearance",
@@ -327,4 +328,4 @@
         applyLanguage('ar');
     </script>
 </body>
-            </html>
+</html>
