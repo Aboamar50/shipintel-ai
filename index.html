@@ -1,339 +1,104 @@
 ﻿<!DOCTYPE html>
-<html lang="ar" dir="rtl" id="htmlRoot">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShipIntel AI - Global Logistics Intelligence</title>
+    <title>ShipIntel AI - لوحة التحكم</title>
     <style>
-        :root {
-            --bg: #0b1329;
-            --card: #131f3d;
-            --primary: #38bdf8;
-            --accent: #0284c7;
-            --text: #f8fafc;
-            --muted: #94a3b8;
-            --success: #10b981;
-            --warning: #f59e0b;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background-color: var(--bg); 
-            color: var(--text); 
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            padding: 24px;
-        }
-        .container { max-width: 1100px; margin: 0 auto; }
-        
-        .{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        .logo-box h1 {
-            font-size: 26px;
-            font-weight: 800;
-            color: #fff;
-        }
-        .logo-box h1 span { color: var(--primary); }
-        .logo-box p {
-            color: var(--muted);
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            margin-top: 4px;
-        }
-        .btn-lang {
-            background-color: var(--primary);
-            color: #0b1329;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        .stat-card {
-            background-color: var(--card);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-        .stat-card .label { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
-        .stat-card .val { font-size: 28px; font-weight: bold; }
-        .val-total { color: #fff; }
-        .val-sea { color: var(--primary); }
-        .val-customs { color: var(--warning); }
-        .val-done { color: var(--success); }
-
-        .search-box {
-            display: flex;
-            gap: 10px;
-            background-color: var(--card);
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.06);
-            margin-bottom: 24px;
-        }
-       .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    direction: ltr;
-}
-            color: #0b1329;
-            border: none;
-            padding: 10px 22px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .search-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            text-align: start;
-        }
-
-        .table-container {
-            background-color: var(--card);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.06);
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-        th, td {
-            padding: 14px 18px;
-            text-align: start;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-        }
-        th { color: var(--muted); font-weight: 600; }
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-        .badge-sea { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
-        .badge-customs { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        body { background-color: #0b1329; color: #fff; font-family: Tahoma, sans-serif; margin: 0; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background-color: #0b1329; border-bottom: 1px solid #1e293b; direction: ltr; }
+        .lang-btn { background: #0ea5e9; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+        .logo-box { display: flex; align-items: center; gap: 12px; }
+        .brand-title { font-size: 22px; font-weight: bold; color: #fff; margin: 0; }
+        .brand-subtitle { font-size: 10px; color: #a0aec0; letter-spacing: 1.5px; margin: 0; }
+        .stats-grid { display: flex; gap: 20px; justify-content: space-between; margin: 30px 0; }
+        .stat-card { background: #111c44; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; flex: 1; text-align: center; }
+        .stat-number { font-size: 28px; font-weight: bold; color: #0ea5e9; margin-top: 10px; }
+        .search-section { background: #111c44; padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .search-input { background: transparent; border: none; color: #fff; width: 70%; font-size: 16px; outline: none; text-align: right; }
+        .search-btn { background: #0ea5e9; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+        .table-container { background: #111c44; border-radius: 12px; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #1e293b; font-size: 14px; }
+        th { color: #a0aec0; }
+        .badge-blue { background: #1e3a8a; color: #60a5fa; padding: 5px 10px; border-radius: 4px; font-size: 12px; }
+        .badge-green { background: #064e3b; color: #34d399; padding: 5px 10px; border-radius: 4px; font-size: 12px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <!-- تم ضبط الزر في البداية ليكون عربي لأن الصفحة عربي -->
-            <button id="langToggleBtn" class="btn-lang" onclick="toggleLanguage()">عربي</button>
-            <div class="logo-box">
-                <h1>Ship<span>Intel</span> AI</h1>
-                <p id="tagline">ENTERPRISE LOGISTICS INTELLIGENCE</p>
-            </div>
-        </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="label" id="stat1Label">إجمالي الشحنات المدارة</div>
-                <div class="val val-total">1,248</div>
+    <header class="header">
+        <button class="lang-btn">عربي</button>
+        <div class="logo-box">
+            <div style="text-align: left;">
+                <h1 class="brand-title">ShipIntel <span style="color: #0ea5e9;">AI</span></h1>
+                <p class="brand-subtitle">ENTERPRISE LOGISTICS INTELLIGENCE</p>
             </div>
-            <div class="stat-card">
-                <div class="label" id="stat2Label">حاويات في عرض البحر</div>
-                <div class="val val-sea">42</div>
-            </div>
-            <div class="stat-card">
-                <div class="label" id="stat3Label">شحنات قيد التخليص الجمركي</div>
-                <div class="val val-customs">18</div>
-            </div>
-            <div class="stat-card">
-                <div class="label" id="stat4Label">تم التسليم بنجاح</div>
-                <div class="val val-done">1,188</div>
-            </div>
+            <!-- أيقونة السفينة -->
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
+                <path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.3.62 4.49 1.62 6"></path>
+                <path d="m12 10-4-6h8l-4 6Z"></path>
+            </svg>
         </div>
+    </header>
 
-        <div class="search-box">
-            <button class="search-btn" id="searchBtn" onclick="performSearch()">تتبع الشحنة</button>
-            <input type="text" id="searchInput" class="search-input" placeholder="أدخل رقم بوليصة الشحن (B/L) أو رقم الحاوية...">
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><div style="display:flex; gap:10px;"><button onclick="exportShipmentsToCSV()" style="background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.4); padding:8px 18px; border-radius:20px; font-size:13px; font-weight:bold; cursor:pointer;">📥 تصدير التقرير (Excel)</button><button onclick="openAddModal()" style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.4); padding:8px 18px; border-radius:20px; font-size:13px; font-weight:bold; cursor:pointer;">+ إضافة شحنة جديدة</button></div></div><div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th id="thBL">رقم البوليصة</th>
-                        <th id="thContainer">الحاوية</th>
-                        <th id="thOrigin">ميناء المغادرة</th>
-                        <th id="thDest">ميناء الوصول</th>
-                        <th id="thETA">موعد الوصول المتوقع</th>
-                        <th id="thStatus">الحالة</th><th id="thActions">الإجراءات</th>
-                    </tr>
-                </thead>
-                <tbody id="shipmentsTable"></tbody>
-            </table>
-        </div>
+    <!-- بطاقات الإحصائيات -->
+    <div class="stats-grid">
+        <div class="stat-card"><div>إجمالي الشحنات المدارة</div><div class="stat-number">1,248</div></div>
+        <div class="stat-card"><div>حاويات في عرض البحر</div><div class="stat-number" style="color: #f59e0b;">42</div></div>
+        <div class="stat-card"><div>شحنات قيد التخليص الجمركي</div><div class="stat-number" style="color: #ef4444;">18</div></div>
+        <div class="stat-card"><div>تم التسليم بنجاح</div><div class="stat-number" style="color: #10b981;">1,188</div></div>
     </div>
 
-    <script>
-        const translations = {
-            ar: {
-                tagline: "ENTERPRISE LOGISTICS INTELLIGENCE",
-                btnText: "عربي", // عندما تكون الصفحة عربي يُكتب على الزر عربي
-                stat1: "إجمالي الشحنات المدارة",
-                stat2: "حاويات في عرض البحر",
-                stat3: "شحنات قيد التخليص الجمركي",
-                stat4: "تم التسليم بنجاح",
-                searchPlaceholder: "أدخل رقم بوليصة الشحن (B/L) أو رقم الحاوية...",
-                searchBtn: "تتبع الشحنة",
-                thBL: "رقم البوليصة",
-                thContainer: "الحاوية",
-                thOrigin: "ميناء المغادرة",
-                thDest: "ميناء الوصول",
-                thETA: "موعد الوصول المتوقع",
-                thStatus: "الحالة",
-                statusSea: "في الطريق البحري",
-                statusCustoms: "تم الفسح الجمركي"
-            },
-            en: {
-                tagline: "ENTERPRISE LOGISTICS INTELLIGENCE",
-                btnText: "English", // عندما تكون الصفحة إنجليزي يُكتب على الزر English
-                stat1: "Total Managed Shipments",
-                stat2: "Containers at Sea",
-                stat3: "Under Customs Clearance",
-                stat4: "Successfully Delivered",
-                searchPlaceholder: "Enter Bill of Lading (B/L) or Container Number...",
-                searchBtn: "Track Shipment",
-                thBL: "B/L Number",
-                thContainer: "Container",
-                thOrigin: "Port of Loading",
-                thDest: "Port of Discharge",
-                thETA: "Expected ETA",
-                thStatus: "Status",
-                statusSea: "In Transit at Sea",
-                statusCustoms: "Customs Cleared"
-            }
-        };
+    <!-- شريط البحث -->
+    <div class="search-section">
+        <button class="search-btn">تتبع الشحنة</button>
+        <input type="text" class="search-input" placeholder="أدخل رقم بوليصة الشحن (B/L) أو رقم الحاوية...">
+    </div>
 
-        const shipments = [
-            {
-                bl: "MSKU-982341",
-                container: "MSKU7382910",
-                origin_ar: "شنغهاي (الصين)", origin_en: "Shanghai (China)",
-                dest_ar: "عدن / المكلا", dest_en: "Aden / Mukalla",
-                eta: "2026-11-02",
-                status: "sea"
-            },
-            {
-                bl: "CMAU-441029",
-                container: "CMAU1029384",
-                origin_ar: "جبل علي (دبي)", origin_en: "Jebel Ali (Dubai)",
-                dest_ar: "جدة الإسلامي", dest_en: "Jeddah Islamic Port",
-                eta: "2026-10-24",
-                status: "customs"
-            },
-            {
-                bl: "HLCU-109283",
-                container: "HLCU5562019",
-                origin_ar: "إسطنبول (تركيا)", origin_en: "Istanbul (Turkey)",
-                dest_ar: "الحديدة / المكلا", dest_en: "Hodeidah / Mukalla",
-                eta: "2026-11-10",
-                status: "sea"
-            }
-        ];
+    <!-- جدول الشحنات الأخيرة -->
+    <div class="table-container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0;">أحدث الشحنات</h3>
+            <div>
+                <button style="background: #10b981; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer;">+ إضافة شحنة جديدة</button>
+                <button style="background: #1e3a8a; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; margin-right: 10px;">تصدير التقرير (Excel)</button>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>رقم البوليصة</th>
+                    <th>الحاوية</th>
+                    <th>ميناء المغادرة</th>
+                    <th>ميناء الوصول</th>
+                    <th>موعد الوصول المتوقع</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>MSKU-982341</b></td>
+                    <td>MSKU7382910</td>
+                    <td>شنغهاي (الصين)</td>
+                    <td>عدن / المكلا</td>
+                    <td>2026-11-02</td>
+                    <td><span class="badge-blue">في الطريق البحري</span></td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td><b>CMAU-441029</b></td>
+                    <td>CMAU1029384</td>
+                    <td>جبل علي (دبي)</td>
+                    <td>جدة الإسلامي</td>
+                    <td>2026-10-24</td>
+                    <td><span class="badge-green">تم الفسح الجمركي</span></td>
+                    <td>...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        let currentLang = 'ar';
-
-        function applyLanguage(lang) {
-            currentLang = lang;
-            const root = document.getElementById("htmlRoot");
-
-            if (lang === 'ar') {
-                root.setAttribute("lang", "ar");
-                root.setAttribute("dir", "rtl");
-            } else {
-                root.setAttribute("lang", "en");
-                root.setAttribute("dir", "ltr");
-            }
-
-            const t = translations[lang];
-            document.getElementById("langToggleBtn").innerText = t.btnText;
-            document.getElementById("tagline").innerText = t.tagline;
-            document.getElementById("stat1Label").innerText = t.stat1;
-            document.getElementById("stat2Label").innerText = t.stat2;
-            document.getElementById("stat3Label").innerText = t.stat3;
-            document.getElementById("stat4Label").innerText = t.stat4;
-            document.getElementById("searchInput").placeholder = t.searchPlaceholder;
-            document.getElementById("searchBtn").innerText = t.searchBtn;
-            document.getElementById("thBL").innerText = t.thBL;
-            document.getElementById("thContainer").innerText = t.thContainer;
-            document.getElementById("thOrigin").innerText = t.thOrigin;
-            document.getElementById("thDest").innerText = t.thDest;
-            document.getElementById("thETA").innerText = t.thETA;
-            document.getElementById("thStatus").innerText = t.thStatus;
-
-            renderTable(shipments);
-        }
-
-        function toggleLanguage() {
-            const nextLang = (currentLang === 'ar') ? 'en' : 'ar';
-            applyLanguage(nextLang);
-        }
-
-        function renderTable(data) {
-            const tbody = document.getElementById("shipmentsTable");
-            tbody.innerHTML = "";
-            const t = translations[currentLang];
-
-            data.forEach(item => {
-                const tr = document.createElement("tr");
-                const origin = (currentLang === 'ar') ? item.origin_ar : item.origin_en;
-                const dest = (currentLang === 'ar') ? item.dest_ar : item.dest_en;
-                const statusBadge = item.status === 'sea' 
-                    ? `<span class="badge badge-sea">${t.statusSea}</span>` 
-                    : `<span class="badge badge-customs">${t.statusCustoms}</span>`;
-
-                tr.innerHTML = `
-                    <td><strong>${item.bl}</strong></td>
-                    <td>${item.container}</td>
-                    <td>${origin}</td>
-                    <td>${dest}</td>
-                    <td>${item.eta}</td>
-                    <td>${statusBadge}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function performSearch() {
-            const val = document.getElementById("searchInput").value.trim().toLowerCase();
-            const filtered = shipments.filter(s => 
-                s.bl.toLowerCase().includes(val) || 
-                s.container.toLowerCase().includes(val)
-            );
-            renderTable(filtered);
-        }
-
-        document.getElementById("searchInput").addEventListener("keyup", function(e) {
-            if (e.key === "Enter") performSearch();
-            if (this.value === "") renderTable(shipments);
-        });
-
-        applyLanguage('ar');
-    </script>
 </body>
 </html>
-
-
-
