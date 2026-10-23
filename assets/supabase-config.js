@@ -1,0 +1,4 @@
+window.SHIPINTEL_SUPABASE_CONFIG = Object.freeze({
+    url: 'YOUR_SUPABASE_PROJECT_URL',
+    anonKey: 'YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY'
+});

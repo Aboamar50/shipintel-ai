@@ -1,6 +1,11 @@
 let currentLang = 'ar';
 let activeFilter = 'all';
 let activeTrackingIndex = null;
+let authMode = 'login';
+let cloudUser = null;
+let cloudProfile = null;
+let cloudConfigured = false;
+let passwordRecoveryRequested = false;
 const STORAGE_KEY = 'shipintel-shipments';
 const LANGUAGE_STORAGE_KEY = 'shipintel-language';
 
@@ -41,7 +46,7 @@ const translations = {
         visualArriving: 'الوصول المتوقع', visualOnTime: 'على المسار',
         mainMenu: 'القائمة الرئيسية', workspace: 'مساحة العمل', overview: 'نظرة عامة',
         shipments: 'الشحنات', trackingCenter: 'مركز متابعة الشحنات',
-        localDataNote: 'تعرض اللوحة بيانات تجريبية محفوظة محليًا في هذا المتصفح.',
+        localDataNote: 'وضع تجريبي محلي؛ لا تُزامَن البيانات مع السحابة قبل إعداد Supabase.',
         operationsCenter: 'مركز العمليات اللوجستية', dashboardTitle: 'لوحة متابعة الشحنات',
         dashboardIntro: 'نظرة واضحة على حركة شحناتك من المغادرة حتى الوصول.',
         currentUser: 'المستخدم الحالي', adminRole: 'مدير النظام', shipmentSummary: 'ملخص الشحنات',
@@ -59,6 +64,32 @@ const translations = {
         carrier: 'الخط الملاحي', originPort: 'ميناء المغادرة', destinationPort: 'ميناء الوصول',
         eta: 'الوصول المتوقع', status: 'الحالة', actions: 'الإجراءات',
         footerNote: 'ShipIntel AI · نموذج أولي ببيانات محلية، ولا يتصل حاليًا بمصادر تتبع شركات الشحن.',
+        authTitle: 'تسجيل الدخول إلى ShipIntel AI',
+        authDescription: 'سجّل الدخول لعرض شحناتك المحفوظة بأمان.',
+        authName: 'الاسم',
+        authEmail: 'البريد الإلكتروني',
+        authPassword: 'كلمة المرور (8 أحرف على الأقل)',
+        authSubmit: 'تسجيل الدخول',
+        authRegister: 'إنشاء حساب جديد',
+        authSwitchLogin: 'لديك حساب؟ تسجيل الدخول',
+        authSwitchRegister: 'ليس لديك حساب؟ إنشاء حساب',
+        authForgotPassword: 'نسيت كلمة المرور؟',
+        authResetTitle: 'إعادة تعيين كلمة المرور',
+        authResetDescription: 'اختر كلمة مرور جديدة لحسابك.',
+        authResetSubmit: 'حفظ كلمة المرور الجديدة',
+        authResetComplete: 'تم تحديث كلمة المرور.',
+        authSignOut: 'تسجيل الخروج',
+        authConfigMissing: 'إعدادات قاعدة البيانات غير مكتملة. أكمل خطوات الإعداد في README.md.',
+        authCheckEmail: 'تم إنشاء الحساب. تحقق من بريدك الإلكتروني لتأكيده، ثم سجّل الدخول.',
+        authResetSent: 'إذا كان البريد مسجلًا، فستصلك رسالة لإعادة تعيين كلمة المرور.',
+        authLoading: 'جارٍ تحميل الحساب والشحنات...',
+        authRoleAdmin: 'مدير النظام',
+        authRoleUser: 'مستخدم',
+        cloudSaveError: 'تعذر حفظ الشحنة في قاعدة البيانات. تحقق من الاتصال والصلاحيات.',
+        cloudDeleteError: 'تعذر حذف الشحنة من قاعدة البيانات. تحقق من الاتصال والصلاحيات.',
+        cloudLoadError: 'تعذر تحميل الشحنات من قاعدة البيانات. أعد المحاولة أو تحقق من إعداد Supabase.',
+        cloudReady: 'الشحنات محفوظة في قاعدة البيانات السحابية.',
+        cloudFooterNote: 'قاعدة بيانات سحابية مفعّلة · لم يتم الربط بعد بمصادر تتبع شركات الشحن.',
         trackingDetails: 'تفاصيل التتبع', journeySummary: 'ملخص الشحنة ومحطات رحلتها',
         close: 'إغلاق', shipmentJourney: 'مسار الشحنة', enterShipmentDetails: 'أدخل بيانات الشحنة لتظهر في لوحة المتابعة.',
         saveShipment: 'حفظ الشحنة', cancel: 'إلغاء', track: 'تتبع', edit: 'تعديل',
@@ -122,7 +153,7 @@ const translations = {
         visualArriving: 'Estimated arrival', visualOnTime: 'On schedule',
         mainMenu: 'Main menu', workspace: 'Workspace', overview: 'Overview',
         shipments: 'Shipments', trackingCenter: 'Shipment tracking center',
-        localDataNote: 'This dashboard displays sample data saved locally in this browser.',
+        localDataNote: 'Local demo mode; data will not sync to the cloud until Supabase is configured.',
         operationsCenter: 'Logistics operations center', dashboardTitle: 'Shipment dashboard',
         dashboardIntro: 'A clear view of your shipments from departure to arrival.',
         currentUser: 'Current user', adminRole: 'Administrator', shipmentSummary: 'Shipment summary',
@@ -140,6 +171,32 @@ const translations = {
         carrier: 'Carrier', originPort: 'Origin port', destinationPort: 'Destination port',
         eta: 'Estimated arrival', status: 'Status', actions: 'Actions',
         footerNote: 'ShipIntel AI · Local-data prototype; not connected to shipping carrier tracking services.',
+        authTitle: 'Sign in to ShipIntel AI',
+        authDescription: 'Sign in to securely view your saved shipments.',
+        authName: 'Name',
+        authEmail: 'Email address',
+        authPassword: 'Password (at least 8 characters)',
+        authSubmit: 'Sign in',
+        authRegister: 'Create account',
+        authSwitchLogin: 'Already have an account? Sign in',
+        authSwitchRegister: "Don't have an account? Create one",
+        authForgotPassword: 'Forgot password?',
+        authResetTitle: 'Reset your password',
+        authResetDescription: 'Choose a new password for your account.',
+        authResetSubmit: 'Save new password',
+        authResetComplete: 'Your password has been updated.',
+        authSignOut: 'Sign out',
+        authConfigMissing: 'Database settings are incomplete. Follow the setup steps in README.md.',
+        authCheckEmail: 'Account created. Check your email to confirm it, then sign in.',
+        authResetSent: 'If the address is registered, a password reset email will arrive.',
+        authLoading: 'Loading your account and shipments...',
+        authRoleAdmin: 'Administrator',
+        authRoleUser: 'User',
+        cloudSaveError: 'Could not save the shipment to the database. Check the connection and permissions.',
+        cloudDeleteError: 'Could not delete the shipment from the database. Check the connection and permissions.',
+        cloudLoadError: 'Could not load shipments from the database. Retry or check the Supabase setup.',
+        cloudReady: 'Shipments are saved in the cloud database.',
+        cloudFooterNote: 'Cloud database enabled · shipping carrier tracking APIs are not connected.',
         trackingDetails: 'Tracking details', journeySummary: 'Shipment summary and journey milestones',
         close: 'Close', shipmentJourney: 'Shipment journey', enterShipmentDetails: 'Enter shipment details to add it to the dashboard.',
         saveShipment: 'Save shipment', cancel: 'Cancel', track: 'Track', edit: 'Edit',
@@ -206,11 +263,220 @@ function applyLanguage() {
         languageButton.textContent = t('languageButton');
         languageButton.setAttribute('aria-label', t('languageLabel'));
     });
+    updateAuthMode();
+    updateSessionLabels();
     if (isDashboard) {
         document.getElementById('addModalTitle').textContent =
             Number.parseInt(document.getElementById('editIndex').value, 10) >= 0 ? t('editTitle') : t('addTitle');
         renderFilteredShipments();
         if (activeTrackingIndex !== null) openTrackingModal(activeTrackingIndex);
+    }
+}
+
+function updateAuthMode() {
+    const nameField = document.getElementById('authNameField');
+    const submit = document.getElementById('authSubmit');
+    const switchMode = document.getElementById('authModeToggle');
+    const forgotPassword = document.getElementById('authForgotPassword');
+    const title = document.getElementById('authTitle');
+    const description = document.getElementById('authDescription');
+    const registering = authMode === 'register';
+    const resetting = authMode === 'reset';
+    if (!nameField || !submit || !switchMode) return;
+    nameField.hidden = !registering;
+    nameField.querySelector('input').required = registering;
+    submit.textContent = resetting ? t('authResetSubmit') : registering ? t('authRegister') : t('authSubmit');
+    switchMode.textContent = registering ? t('authSwitchLogin') : t('authSwitchRegister');
+    switchMode.hidden = resetting;
+    if (forgotPassword) forgotPassword.hidden = registering || resetting;
+    if (title) title.textContent = resetting ? t('authResetTitle') : t('authTitle');
+    if (description) description.textContent = resetting ? t('authResetDescription') : t('authDescription');
+    document.getElementById('authPassword').autocomplete = resetting ? 'new-password' : 'current-password';
+}
+
+function updateSessionLabels() {
+    const identity = document.getElementById('currentUserName');
+    const role = document.getElementById('currentUserRole');
+    const signOutButton = document.getElementById('signOutButton');
+    if (!identity || !role || !signOutButton) return;
+    if (cloudUser && cloudProfile) {
+        identity.textContent = cloudProfile.display_name || cloudUser.email || '';
+        role.textContent = cloudProfile.role === 'admin' ? t('authRoleAdmin') : t('authRoleUser');
+        signOutButton.hidden = false;
+    } else {
+        identity.textContent = '';
+        role.textContent = '';
+        signOutButton.hidden = true;
+    }
+    const status = document.getElementById('cloudStatus');
+    const footer = document.getElementById('footerStatus');
+    if (status) status.textContent = cloudConfigured && cloudUser ? t('cloudReady') : t('localDataNote');
+    if (footer) footer.textContent = cloudConfigured && cloudUser ? t('cloudFooterNote') : t('footerNote');
+}
+
+function showAuthFeedback(message, isError = false) {
+    const feedback = document.getElementById('authFeedback');
+    if (!feedback) return;
+    feedback.textContent = message;
+    feedback.classList.toggle('error', isError);
+}
+
+async function loadAuthenticatedDashboard(user) {
+    if (!user || !window.shipIntelBackend) return;
+    const authGate = document.getElementById('authGate');
+    const appShell = document.getElementById('appShell');
+    showAuthFeedback(t('authLoading'));
+    try {
+        cloudProfile = await window.shipIntelBackend.getProfile();
+        shipments = await window.shipIntelBackend.getShipments();
+        cloudUser = user;
+        updateSessionLabels();
+        renderFilteredShipments();
+        authGate.hidden = true;
+        appShell.hidden = false;
+    } catch (error) {
+        console.error('تعذر تحميل بيانات حساب Supabase.', error);
+        authGate.hidden = false;
+        appShell.hidden = true;
+        showAuthFeedback(`${t('cloudLoadError')} ${error.message}`, true);
+    }
+}
+
+async function handleAuthStateChange(user, event) {
+    if (!cloudConfigured) return;
+    if (event === 'INITIAL_SESSION' && !passwordRecoveryRequested) return;
+    if (event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') return;
+    if (event === 'PASSWORD_RECOVERY' || (event === 'INITIAL_SESSION' && passwordRecoveryRequested)) {
+        cloudUser = user;
+        authMode = 'reset';
+        document.getElementById('appShell').hidden = true;
+        document.getElementById('authGate').hidden = false;
+        updateAuthMode();
+        showAuthFeedback('');
+        return;
+    }
+    if (user) {
+        await loadAuthenticatedDashboard(user);
+        return;
+    }
+    cloudUser = null;
+    cloudProfile = null;
+    shipments = [];
+    updateSessionLabels();
+    document.getElementById('appShell').hidden = true;
+    document.getElementById('authGate').hidden = false;
+    showAuthFeedback('');
+}
+
+async function submitAuthForm(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const submitButton = document.getElementById('authSubmit');
+    submitButton.disabled = true;
+    showAuthFeedback('');
+    try {
+        const email = document.getElementById('authEmail').value.trim();
+        const password = document.getElementById('authPassword').value;
+        const backend = window.shipIntelBackend;
+        if (authMode === 'reset') {
+            const { error } = await backend.updatePassword(password);
+            if (error) throw error;
+            passwordRecoveryRequested = false;
+            authMode = 'login';
+            updateAuthMode();
+            await loadAuthenticatedDashboard(cloudUser);
+            document.getElementById('cloudStatus').textContent = t('authResetComplete');
+            form.reset();
+        } else if (authMode === 'register') {
+            const fullName = document.getElementById('authName').value.trim();
+            const { data, error } = await backend.signUp(email, password, fullName);
+            if (error) throw error;
+            if (data.session) {
+                showAuthFeedback(t('authLoading'));
+            } else {
+                form.reset();
+                authMode = 'login';
+                updateAuthMode();
+                showAuthFeedback(t('authCheckEmail'));
+            }
+        } else {
+            const { error } = await backend.signIn(email, password);
+            if (error) throw error;
+            showAuthFeedback(t('authLoading'));
+        }
+    } catch (error) {
+        console.error('فشلت عملية المصادقة.', error);
+        showAuthFeedback(error.message, true);
+    } finally {
+        submitButton.disabled = false;
+    }
+}
+
+async function sendPasswordReset() {
+    const email = document.getElementById('authEmail').value.trim();
+    if (!email) {
+        showAuthFeedback(t('authEmail'), true);
+        document.getElementById('authEmail').focus();
+        return;
+    }
+    try {
+        const redirectTo = new URL('dashboard.html', window.location.href).href;
+        const { error } = await window.shipIntelBackend.resetPassword(email, redirectTo);
+        if (error) throw error;
+        showAuthFeedback(t('authResetSent'));
+    } catch (error) {
+        console.error('تعذر إرسال رابط إعادة تعيين كلمة المرور.', error);
+        showAuthFeedback(error.message, true);
+    }
+}
+
+async function signOut() {
+    try {
+        const { error } = await window.shipIntelBackend.signOut();
+        if (error) throw error;
+    } catch (error) {
+        console.error('تعذر تسجيل الخروج من Supabase.', error);
+        document.getElementById('cloudStatus').textContent = error.message;
+    }
+}
+
+async function initializeDashboardBackend() {
+    const authGate = document.getElementById('authGate');
+    const appShell = document.getElementById('appShell');
+    const backend = window.shipIntelBackend;
+    cloudConfigured = Boolean(backend && backend.configured);
+
+    if (!cloudConfigured) {
+        authGate.hidden = true;
+        appShell.hidden = false;
+        updateSessionLabels();
+        loadShipments();
+        renderFilteredShipments();
+        return;
+    }
+
+    appShell.hidden = true;
+    authGate.hidden = false;
+    passwordRecoveryRequested = new URLSearchParams(window.location.hash.slice(1)).get('type') === 'recovery';
+    backend.onAuthStateChange((user, event) => {
+        void handleAuthStateChange(user, event);
+    });
+    try {
+        const result = await backend.initialize();
+        if (result.user && passwordRecoveryRequested) {
+            cloudUser = result.user;
+            authMode = 'reset';
+            updateAuthMode();
+        } else if (result.user) {
+            await loadAuthenticatedDashboard(result.user);
+        } else {
+            showAuthFeedback('');
+        }
+    } catch (error) {
+        console.error('تعذر تهيئة خدمة Supabase.', error);
+        showAuthFeedback(`${t('cloudLoadError')} ${error.message}`, true);
+        document.getElementById('authSubmit').disabled = true;
+        document.getElementById('authModeToggle').disabled = true;
     }
 }
 
@@ -504,7 +770,7 @@ function closeAddModal() {
     if (modal) modal.classList.remove("open");
 }
 
-function saveShipment(e) {
+async function saveShipment(e) {
     e.preventDefault();
     const editIdx = Number.parseInt(document.getElementById("editIndex").value, 10);
     const stVal = document.getElementById("fStatus").value;
@@ -537,21 +803,52 @@ function saveShipment(e) {
         ]
     };
 
-    if (editIdx >= 0) {
-        shipments[editIdx] = newShipment;
-    } else {
-        shipments.unshift(newShipment);
+    try {
+        if (cloudConfigured) {
+            const savedShipment = await window.shipIntelBackend.saveShipment({
+                ...newShipment,
+                id: existingShipment ? existingShipment.id : undefined
+            });
+            if (editIdx >= 0) {
+                shipments[editIdx] = savedShipment;
+            } else {
+                shipments.unshift(savedShipment);
+            }
+        } else {
+            if (editIdx >= 0) {
+                shipments[editIdx] = newShipment;
+            } else {
+                shipments.unshift(newShipment);
+            }
+            persistShipments();
+        }
+        closeAddModal();
+        renderFilteredShipments();
+        document.getElementById('searchFeedback').textContent = '';
+    } catch (error) {
+        console.error('تعذر حفظ الشحنة.', error);
+        document.getElementById('searchFeedback').textContent = cloudConfigured
+            ? `${t('cloudSaveError')} ${error.message}`
+            : t('storageError');
     }
-    persistShipments();
-    closeAddModal();
-    renderFilteredShipments();
 }
 
-function deleteShipment(index) {
+async function deleteShipment(index) {
     if (confirm(t('confirmDelete'))) {
-        shipments.splice(index, 1);
-        persistShipments();
-        renderFilteredShipments();
+        try {
+            if (cloudConfigured) {
+                await window.shipIntelBackend.deleteShipment(shipments[index].id);
+            }
+            shipments.splice(index, 1);
+            if (!cloudConfigured) persistShipments();
+            renderFilteredShipments();
+            document.getElementById('searchFeedback').textContent = '';
+        } catch (error) {
+            console.error('تعذر حذف الشحنة.', error);
+            document.getElementById('searchFeedback').textContent = cloudConfigured
+                ? `${t('cloudDeleteError')} ${error.message}`
+                : t('storageError');
+        }
     }
 }
 
@@ -562,6 +859,7 @@ function getStatusTextForStatus(status, language = 'ar') {
 }
 
 function persistShipments() {
+    if (cloudConfigured) return;
     try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(shipments));
         document.getElementById("searchFeedback").textContent = '';
@@ -617,8 +915,6 @@ window.addEventListener('DOMContentLoaded', () => {
     applyLanguage();
     if (!document.getElementById('shipmentsTable')) return;
 
-    loadShipments();
-    renderFilteredShipments();
     document.getElementById("searchInput").addEventListener("input", () => {
         document.getElementById("searchFeedback").textContent = '';
         runFilter();
@@ -628,10 +924,19 @@ window.addEventListener('DOMContentLoaded', () => {
         trackShipmentAction();
     });
     document.getElementById("addShipmentForm").addEventListener("submit", saveShipment);
+    document.getElementById('authForm').addEventListener('submit', submitAuthForm);
+    document.getElementById('authModeToggle').addEventListener('click', () => {
+        authMode = authMode === 'login' ? 'register' : 'login';
+        showAuthFeedback('');
+        updateAuthMode();
+    });
+    document.getElementById('authForgotPassword').addEventListener('click', sendPasswordReset);
+    document.getElementById('signOutButton').addEventListener('click', signOut);
     document.addEventListener("keydown", event => {
         if (event.key === "Escape") {
             closeTrackingModal();
             closeAddModal();
         }
     });
+    void initializeDashboardBackend();
 });

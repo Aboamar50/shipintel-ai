@@ -8,7 +8,41 @@
     <link rel="stylesheet" href="assets/shipintel.css">
 </head>
 <body>
-<div class="app-shell">
+    <section class="auth-gate" id="authGate" aria-labelledby="authTitle">
+        <div class="auth-card">
+            <a class="auth-brand" href="index.html" onclick="passLanguageToLanding(event)">
+                <img src="assets/shipintel-logo.png" alt="">
+                <span>ShipIntel <strong>AI</strong></span>
+            </a>
+            <h1 id="authTitle" data-i18n="authTitle">تسجيل الدخول إلى ShipIntel AI</h1>
+            <p class="auth-description" id="authDescription" data-i18n="authDescription">سجّل الدخول لعرض شحناتك المحفوظة بأمان.</p>
+            <form id="authForm">
+                <label id="authNameField" class="auth-field" hidden>
+                    <span data-i18n="authName">الاسم</span>
+                    <input id="authName" type="text" autocomplete="name" maxlength="120">
+                </label>
+                <label class="auth-field">
+                    <span data-i18n="authEmail">البريد الإلكتروني</span>
+                    <input id="authEmail" type="email" autocomplete="email" required maxlength="254">
+                </label>
+                <label class="auth-field">
+                    <span data-i18n="authPassword">كلمة المرور (8 أحرف على الأقل)</span>
+                    <input id="authPassword" type="password" autocomplete="current-password" minlength="8" maxlength="128" required>
+                </label>
+                <button class="primary-btn auth-submit" id="authSubmit" type="submit" data-i18n="authSubmit">تسجيل الدخول</button>
+            </form>
+            <div class="auth-options">
+                <button class="auth-link" id="authModeToggle" type="button" data-i18n="authSwitchRegister">ليس لديك حساب؟ إنشاء حساب</button>
+                <button class="auth-link" id="authForgotPassword" type="button" data-i18n="authForgotPassword">نسيت كلمة المرور؟</button>
+            </div>
+            <p class="auth-feedback" id="authFeedback" role="status" aria-live="polite"></p>
+            <div class="auth-footer">
+                <button class="language-btn language-toggle" type="button" onclick="toggleLanguage()" aria-label="Switch language">English</button>
+                <a href="index.html" onclick="passLanguageToLanding(event)" data-i18n="home">الرئيسية</a>
+            </div>
+        </div>
+    </section>
+<div class="app-shell" id="appShell" hidden>
         <aside class="sidebar" aria-label="القائمة الرئيسية" data-i18n-aria-label="mainMenu">
             <div class="brand">
                 <a class="brand-mark" href="index.html" onclick="passLanguageToLanding(event)" aria-label="ShipIntel AI"><img src="assets/shipintel-logo.png" alt=""></a>
@@ -36,7 +70,7 @@
             </div>
             <div class="side-note">
                 <strong data-i18n="trackingCenter">مركز متابعة الشحنات</strong>
-                <span data-i18n="localDataNote">تعرض اللوحة بيانات تجريبية محفوظة محليًا في هذا المتصفح.</span>
+                <span id="cloudStatus" data-i18n="localDataNote">تعرض اللوحة بيانات تجريبية محفوظة محليًا في هذا المتصفح.</span>
             </div>
         </aside>
 
@@ -48,6 +82,11 @@
                     <p class="topbar-note" data-i18n="dashboardIntro">نظرة واضحة على حركة شحناتك من المغادرة حتى الوصول.</p>
                 </div>
                 <div class="topbar-actions">
+                    <div class="session-identity" id="sessionIdentity">
+                        <span id="currentUserName"></span>
+                        <small id="currentUserRole"></small>
+                    </div>
+                    <button class="secondary-btn sign-out-btn" id="signOutButton" type="button" data-i18n="authSignOut" hidden>تسجيل الخروج</button>
                     <button class="language-btn language-toggle" type="button" onclick="toggleLanguage()" aria-label="Switch language">English</button>
                 </div>
             </header>
@@ -115,7 +154,7 @@
                     </table>
                 </div>
             </section>
-            <p class="footer-note" data-i18n="footerNote">ShipIntel AI · نموذج أولي ببيانات محلية، ولا يتصل حاليًا بمصادر تتبع شركات الشحن.</p>
+            <p class="footer-note" id="footerStatus" data-i18n="footerNote">ShipIntel AI · نموذج أولي ببيانات محلية، ولا يتصل حاليًا بمصادر تتبع شركات الشحن.</p>
         </main>
     </div>
 
@@ -142,12 +181,12 @@
             <form id="addShipmentForm" class="modal-body">
                 <input id="editIndex" type="hidden" value="-1">
                 <div class="form-grid">
-                            <div class="form-group"><label for="fBL" data-i18n="billOfLading">رقم البوليصة</label><input id="fBL" name="bl" required autocomplete="off" placeholder="مثال: MSKU-982341" data-i18n-placeholder="blPlaceholder"></div>
-                            <div class="form-group"><label for="fCont" data-i18n="containerNumber">رقم الحاوية</label><input id="fCont" name="container" required autocomplete="off" placeholder="مثال: MSKU7382910" data-i18n-placeholder="containerPlaceholder"></div>
-                    <div class="form-group"><label for="fCarrier" data-i18n="carrier">الخط الملاحي</label><input id="fCarrier" name="carrier" required placeholder="Maersk Line"></div>
+                            <div class="form-group"><label for="fBL" data-i18n="billOfLading">رقم البوليصة</label><input id="fBL" name="bl" maxlength="120" required autocomplete="off" placeholder="مثال: MSKU-982341" data-i18n-placeholder="blPlaceholder"></div>
+                            <div class="form-group"><label for="fCont" data-i18n="containerNumber">رقم الحاوية</label><input id="fCont" name="container" maxlength="60" required autocomplete="off" placeholder="مثال: MSKU7382910" data-i18n-placeholder="containerPlaceholder"></div>
+                    <div class="form-group"><label for="fCarrier" data-i18n="carrier">الخط الملاحي</label><input id="fCarrier" name="carrier" maxlength="120" required placeholder="Maersk Line"></div>
                     <div class="form-group"><label for="fETA" data-i18n="eta">موعد الوصول المتوقع</label><input id="fETA" name="eta" type="date" required></div>
-                    <div class="form-group"><label for="fOrigin" data-i18n="originPort">ميناء المغادرة</label><input id="fOrigin" name="origin" required placeholder="شنغهاي، الصين" data-i18n-placeholder="originPlaceholder"></div>
-                    <div class="form-group"><label for="fDest" data-i18n="destinationPort">ميناء الوصول</label><input id="fDest" name="dest" required placeholder="ميناء الوصول" data-i18n-placeholder="destinationPlaceholder"></div>
+                    <div class="form-group"><label for="fOrigin" data-i18n="originPort">ميناء المغادرة</label><input id="fOrigin" name="origin" maxlength="160" required placeholder="شنغهاي، الصين" data-i18n-placeholder="originPlaceholder"></div>
+                    <div class="form-group"><label for="fDest" data-i18n="destinationPort">ميناء الوصول</label><input id="fDest" name="dest" maxlength="160" required placeholder="ميناء الوصول" data-i18n-placeholder="destinationPlaceholder"></div>
                     <div class="form-group"><label for="fStatus" data-i18n="status">حالة الشحنة</label><select id="fStatus" name="status"><option value="sea" data-i18n="inTransit">في الطريق البحري</option><option value="customs" data-i18n="customsClearance">قيد التخليص الجمركي</option><option value="delivered" data-i18n="delivered">تم التسليم</option></select></div>
                 </div>
                 <div class="form-actions">
@@ -157,6 +196,9 @@
             </form>
         </section>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="assets/supabase-config.js" defer></script>
+    <script src="backend.js" defer></script>
     <script src="app.js" defer></script>
 </body>
 </html>
