@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1120">
+    <title>ShipIntel AI | لوحة تتبع الشحنات</title>
+    <link rel="stylesheet" href="assets/shipintel.css">
+</head>
+<body>
+<div class="app-shell">
+        <aside class="sidebar" aria-label="القائمة الرئيسية" data-i18n-aria-label="mainMenu">
+            <div class="brand">
+                <a class="brand-mark" href="index.html" onclick="passLanguageToLanding(event)" aria-label="ShipIntel AI"><img src="assets/shipintel-logo.png" alt=""></a>
+                <div>
+                    <p class="brand-name">ShipIntel <span>AI</span></p>
+                    <p class="brand-caption">LOGISTICS INTELLIGENCE</p>
+                </div>
+            </div>
+            <div>
+                <p class="nav-label" data-i18n="workspace">مساحة العمل</p>
+                <nav class="nav-list">
+                    <a class="nav-link active" href="#overview">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
+                        <span data-i18n="overview">نظرة عامة</span>
+                    </a>
+                    <a class="nav-link" href="#shipments">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18M5 7l1 13h12l1-13M9 7V4h6v3M9 11v5M15 11v5"></path></svg>
+                        <span data-i18n="shipments">الشحنات</span>
+                    </a>
+                    <a class="nav-link" href="index.html" onclick="passLanguageToLanding(event)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1V10Z"></path></svg>
+                        <span data-i18n="home">الرئيسية</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="side-note">
+                <strong data-i18n="trackingCenter">مركز متابعة الشحنات</strong>
+                <span data-i18n="localDataNote">تعرض اللوحة بيانات تجريبية محفوظة محليًا في هذا المتصفح.</span>
+            </div>
+        </aside>
+
+        <main class="main-content" id="overview">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow" data-i18n="operationsCenter">مركز العمليات اللوجستية</p>
+                    <h1 data-i18n="dashboardTitle">لوحة متابعة الشحنات</h1>
+                    <p class="topbar-note" data-i18n="dashboardIntro">نظرة واضحة على حركة شحناتك من المغادرة حتى الوصول.</p>
+                </div>
+                <div class="topbar-actions">
+                    <button class="language-btn language-toggle" type="button" onclick="toggleLanguage()" aria-label="Switch language">English</button>
+                </div>
+            </header>
+
+            <section aria-labelledby="overview-title">
+                <div class="section-heading">
+                    <div><h2 id="overview-title" data-i18n="shipmentSummary">ملخص الشحنات</h2><p data-i18n="statsDescription">إحصاءات محدثة من قائمة الشحنات الحالية</p></div>
+                </div>
+                <div class="stats-grid">
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-label" data-i18n="totalShipments">إجمالي الشحنات</span><span class="stat-icon icon-blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18M5 7l1 13h12l1-13M9 7V4h6v3"></path></svg></span></div>
+                        <div class="stat-value" id="totalCount">0</div><div class="stat-foot" data-i18n="allRegistered">كل الشحنات المسجلة</div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-label" data-i18n="inTransit">في الطريق البحري</span><span class="stat-icon icon-amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 16h18l-2 4H6l-3-4ZM6 16V8h12v8M9 8l2-4h2l2 4"></path></svg></span></div>
+                        <div class="stat-value" id="seaCount">0</div><div class="stat-foot" data-i18n="shipmentsInTransit">شحنات قيد النقل</div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-label" data-i18n="customsClearance">التخليص الجمركي</span><span class="stat-icon icon-violet" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21h16M6 21V7l6-4 6 4v14M9 11h6M9 15h6"></path></svg></span></div>
+                        <div class="stat-value" id="customsCount">0</div><div class="stat-foot" data-i18n="arrivalProcessing">الشحنات ضمن إجراءات الوصول</div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-label" data-i18n="delivered">تم التسليم</span><span class="stat-icon icon-green" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 12 4 4L19 6"></path><circle cx="12" cy="12" r="9"></circle></svg></span></div>
+                        <div class="stat-value" id="deliveredCount">0</div><div class="stat-foot" data-i18n="completedShipments">شحنات مكتملة</div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="tracking-panel" aria-labelledby="tracking-title">
+                <div class="section-heading">
+                    <div><h2 id="tracking-title" data-i18n="trackShipment">تتبع شحنة</h2><p data-i18n="trackingInstructions">أدخل رقم البوليصة أو الحاوية لعرض آخر تفاصيل الشحنة.</p></div>
+                </div>
+                <form class="tracking-search" id="trackingSearchForm">
+                    <label class="search-field" for="searchInput">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+                        <input id="searchInput" type="search" placeholder="مثال: MSKU-982341 أو MSKU7382910" data-i18n-placeholder="searchPlaceholder" autocomplete="off" aria-label="رقم بوليصة الشحن أو الحاوية" data-i18n-aria-label="searchLabel">
+                    </label>
+                    <button class="primary-btn" type="submit" data-i18n="showTracking">عرض التتبع</button>
+                </form>
+                <div class="feedback" id="searchFeedback" role="status" aria-live="polite"></div>
+            </section>
+
+            <section class="table-panel" id="shipments" aria-labelledby="shipments-title">
+                <div class="table-toolbar">
+                    <div><h2 id="shipments-title" data-i18n="recentShipments">الشحنات الأخيرة</h2><p data-i18n="manageShipments">إدارة تفاصيل الشحنات ومتابعة حالتها</p></div>
+                    <div class="toolbar-actions">
+                        <button class="secondary-btn" type="button" onclick="exportShipmentsToCSV()" data-i18n="exportCsv">تصدير CSV</button>
+                        <button class="primary-btn" type="button" onclick="openAddModal()" data-i18n="addShipment">＋ إضافة شحنة</button>
+                    </div>
+                </div>
+                <div class="filter-row" role="group" aria-label="تصفية حسب الحالة" data-i18n-aria-label="filterByStatus">
+                    <button class="filter-btn active" id="filterAll" type="button" onclick="setFilter('all')" data-i18n="all">الكل</button>
+                    <button class="filter-btn" id="filterSea" type="button" onclick="setFilter('sea')" data-i18n="inTransitShort">في الطريق</button>
+                    <button class="filter-btn" id="filterCustoms" type="button" onclick="setFilter('customs')" data-i18n="customsClearance">التخليص الجمركي</button>
+                    <button class="filter-btn" id="filterDelivered" type="button" onclick="setFilter('delivered')" data-i18n="delivered">تم التسليم</button>
+                </div>
+                <div class="table-scroll">
+                    <table>
+                        <thead><tr>
+                            <th scope="col" data-i18n="billOfLading">رقم البوليصة</th><th scope="col" data-i18n="containerNumber">رقم الحاوية</th><th scope="col" data-i18n="carrier">الخط الملاحي</th>
+                            <th scope="col" data-i18n="originPort">ميناء المغادرة</th><th scope="col" data-i18n="destinationPort">ميناء الوصول</th><th scope="col" data-i18n="eta">الوصول المتوقع</th>
+                            <th scope="col" data-i18n="status">الحالة</th><th scope="col" data-i18n="actions">الإجراءات</th>
+                        </tr></thead>
+                        <tbody id="shipmentsTable"></tbody>
+                    </table>
+                </div>
+            </section>
+            <p class="footer-note" data-i18n="footerNote">ShipIntel AI · نموذج أولي ببيانات محلية، ولا يتصل حاليًا بمصادر تتبع شركات الشحن.</p>
+        </main>
+    </div>
+
+    <div class="modal-backdrop" id="trackingModal" role="dialog" aria-modal="true" aria-labelledby="trackingModalTitle" onclick="if (event.target === this) closeTrackingModal()">
+        <section class="modal-card">
+            <header class="modal-header">
+                <div><h2 id="trackingModalTitle" data-i18n="trackingDetails">تفاصيل التتبع</h2><p data-i18n="journeySummary">ملخص الشحنة ومحطات رحلتها</p></div>
+                <button class="icon-btn" type="button" aria-label="إغلاق" data-i18n-aria-label="close" onclick="closeTrackingModal()">×</button>
+            </header>
+            <div class="modal-body">
+                <div class="detail-grid" id="modalDetails"></div>
+                <h3 class="timeline-title" data-i18n="shipmentJourney">مسار الشحنة</h3>
+                <div class="timeline" id="modalTimeline"></div>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal-backdrop" id="addModal" role="dialog" aria-modal="true" aria-labelledby="addModalTitle" onclick="if (event.target === this) closeAddModal()">
+        <section class="modal-card">
+            <header class="modal-header">
+                <div><h2 id="addModalTitle" data-i18n="addShipment">إضافة شحنة</h2><p data-i18n="enterShipmentDetails">أدخل بيانات الشحنة لتظهر في لوحة المتابعة.</p></div>
+                <button class="icon-btn" type="button" aria-label="إغلاق" data-i18n-aria-label="close" onclick="closeAddModal()">×</button>
+            </header>
+            <form id="addShipmentForm" class="modal-body">
+                <input id="editIndex" type="hidden" value="-1">
+                <div class="form-grid">
+                            <div class="form-group"><label for="fBL" data-i18n="billOfLading">رقم البوليصة</label><input id="fBL" name="bl" required autocomplete="off" placeholder="مثال: MSKU-982341" data-i18n-placeholder="blPlaceholder"></div>
+                            <div class="form-group"><label for="fCont" data-i18n="containerNumber">رقم الحاوية</label><input id="fCont" name="container" required autocomplete="off" placeholder="مثال: MSKU7382910" data-i18n-placeholder="containerPlaceholder"></div>
+                    <div class="form-group"><label for="fCarrier" data-i18n="carrier">الخط الملاحي</label><input id="fCarrier" name="carrier" required placeholder="Maersk Line"></div>
+                    <div class="form-group"><label for="fETA" data-i18n="eta">موعد الوصول المتوقع</label><input id="fETA" name="eta" type="date" required></div>
+                    <div class="form-group"><label for="fOrigin" data-i18n="originPort">ميناء المغادرة</label><input id="fOrigin" name="origin" required placeholder="شنغهاي، الصين" data-i18n-placeholder="originPlaceholder"></div>
+                    <div class="form-group"><label for="fDest" data-i18n="destinationPort">ميناء الوصول</label><input id="fDest" name="dest" required placeholder="ميناء الوصول" data-i18n-placeholder="destinationPlaceholder"></div>
+                    <div class="form-group"><label for="fStatus" data-i18n="status">حالة الشحنة</label><select id="fStatus" name="status"><option value="sea" data-i18n="inTransit">في الطريق البحري</option><option value="customs" data-i18n="customsClearance">قيد التخليص الجمركي</option><option value="delivered" data-i18n="delivered">تم التسليم</option></select></div>
+                </div>
+                <div class="form-actions">
+                    <button class="primary-btn" type="submit" data-i18n="saveShipment">حفظ الشحنة</button>
+                    <button class="secondary-btn" type="button" onclick="closeAddModal()" data-i18n="cancel">إلغاء</button>
+                </div>
+            </form>
+        </section>
+    </div>
+    <script src="app.js" defer></script>
+</body>
+</html>
