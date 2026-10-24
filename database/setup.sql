@@ -1,9 +1,13 @@
 create table if not exists public.profiles (
     id uuid primary key references auth.users (id) on delete cascade,
     display_name text not null default '',
-    role text not null default 'user' check (role in ('user', 'admin')),
+    role text not null default 'user' check (role in ('user', 'customs_agent', 'admin')),
     created_at timestamptz not null default now()
 );
+
+alter table public.profiles drop constraint if exists profiles_role_check;
+alter table public.profiles
+    add constraint profiles_role_check check (role in ('user', 'customs_agent', 'admin'));
 
 create or replace function public.handle_new_user()
 returns trigger
@@ -44,6 +48,24 @@ $$;
 
 revoke all on function public.is_shipintel_admin() from public;
 grant execute on function public.is_shipintel_admin() to authenticated;
+
+create or replace function public.is_shipintel_operator()
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+    select exists (
+        select 1
+        from public.profiles
+        where id = (select auth.uid())
+          and role in ('customs_agent', 'admin')
+    );
+$$;
+
+revoke all on function public.is_shipintel_operator() from public;
+grant execute on function public.is_shipintel_operator() to authenticated;
 
 create table if not exists public.shipments (
     id uuid primary key default gen_random_uuid(),
@@ -98,22 +120,38 @@ create policy "Users can read their profile; admins can read all"
     using (id = (select auth.uid()) or (select public.is_shipintel_admin()));
 
 drop policy if exists "Users and admins can read permitted shipments" on public.shipments;
-create policy "Users and admins can read permitted shipments"
+drop policy if exists "Authorized operators can read permitted shipments" on public.shipments;
+create policy "Authorized operators can read permitted shipments"
     on public.shipments for select to authenticated
-    using (owner_id = (select auth.uid()) or (select public.is_shipintel_admin()));
+    using (
+        (select public.is_shipintel_operator())
+        and (owner_id = (select auth.uid()) or (select public.is_shipintel_admin()))
+    );
 
 drop policy if exists "Users can create their own shipments" on public.shipments;
-create policy "Users can create their own shipments"
+drop policy if exists "Authorized operators can create their own shipments" on public.shipments;
+create policy "Authorized operators can create their own shipments"
     on public.shipments for insert to authenticated
-    with check (owner_id = (select auth.uid()));
+    with check ((select public.is_shipintel_operator()) and owner_id = (select auth.uid()));
 
 drop policy if exists "Users can update their own shipments; admins can update all" on public.shipments;
-create policy "Users can update their own shipments; admins can update all"
+drop policy if exists "Authorized operators can update permitted shipments" on public.shipments;
+create policy "Authorized operators can update permitted shipments"
     on public.shipments for update to authenticated
-    using (owner_id = (select auth.uid()) or (select public.is_shipintel_admin()))
-    with check (owner_id = (select auth.uid()) or (select public.is_shipintel_admin()));
+    using (
+        (select public.is_shipintel_operator())
+        and (owner_id = (select auth.uid()) or (select public.is_shipintel_admin()))
+    )
+    with check (
+        (select public.is_shipintel_operator())
+        and (owner_id = (select auth.uid()) or (select public.is_shipintel_admin()))
+    );
 
 drop policy if exists "Users can delete their own shipments; admins can delete all" on public.shipments;
-create policy "Users can delete their own shipments; admins can delete all"
+drop policy if exists "Authorized operators can delete permitted shipments" on public.shipments;
+create policy "Authorized operators can delete permitted shipments"
     on public.shipments for delete to authenticated
-    using (owner_id = (select auth.uid()) or (select public.is_shipintel_admin()));
+    using (
+        (select public.is_shipintel_operator())
+        and (owner_id = (select auth.uid()) or (select public.is_shipintel_admin()))
+    );

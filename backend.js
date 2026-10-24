@@ -61,11 +61,12 @@
         return { configured: true, user: data.session ? data.session.user : null };
     }
 
-    async function getProfile() {
+    async function getProfile(userId) {
         const activeClient = requireClient();
         const { data, error } = await activeClient
             .from('profiles')
             .select('display_name, role')
+            .eq('id', userId)
             .single();
         if (error) throw error;
         return data;
@@ -124,16 +125,6 @@
         },
         signIn(email, password) {
             return requireClient().auth.signInWithPassword({ email, password });
-        },
-        signUp(email, password, fullName) {
-            return requireClient().auth.signUp({
-                email,
-                password,
-                options: {
-                    data: { full_name: fullName },
-                    emailRedirectTo: new URL('dashboard.html', window.location.href).href
-                }
-            });
         },
         signOut() {
             return requireClient().auth.signOut();

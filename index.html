@@ -4,195 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0b1120">
-    <title>ShipIntel AI | منصة تتبع الشحنات</title>
+    <title>ShipIntel AI | تسجيل الدخول</title>
     <link rel="stylesheet" href="assets/shipintel.css">
 </head>
-<body class="landing-body">
-    <section class="landing-page" id="landingPage">
-        <header class="landing-nav">
-            <a class="landing-brand" href="index.html" aria-label="ShipIntel AI">
-                <span class="brand-mark"><img src="assets/shipintel-logo.png" alt=""></span>
-                <span>
-                    <span class="brand-name" style="display:block">ShipIntel <span>AI</span></span>
-                    <span class="brand-caption" style="display:block" data-i18n="brandCaption">ذكاء للعمليات البحرية</span>
-                </span>
-            </a>
-            <nav class="landing-links" aria-label="التنقل في الصفحة" data-i18n-aria-label="landingNav">
-                <a href="#routes" data-i18n="mapNav">المسارات</a>
-                <a href="#pricing" data-i18n="pricingNav">الباقات</a>
-            </nav>
-            <div class="landing-nav-actions">
-                <button class="language-btn language-toggle" type="button" onclick="toggleLanguage()" aria-label="Switch language">English</button>
-                <a class="landing-cta" href="dashboard.html" onclick="passLanguage(event)">
-                    <span data-i18n="landingCta">ابدأ الآن</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-                </a>
+<body class="entry-body">
+    <main class="entry-shell">
+        <section class="entry-brand-panel" aria-labelledby="entryBrandTitle">
+            <div class="entry-brand-grid" aria-hidden="true"></div>
+            <svg class="entry-orbit entry-orbit-one" viewBox="0 0 760 620" fill="none" aria-hidden="true">
+                <path d="M-40 440C105 277 195 202 348 207s226 133 375 37 189-185 307-146" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M-45 482C95 320 198 250 341 253s226 133 375 37 189-185 307-146" stroke="currentColor" stroke-width="1" stroke-dasharray="3 9"/>
+                <path d="M-12 365C138 202 229 130 382 135s226 133 375 37 189-185 307-146" stroke="currentColor" stroke-width=".8" opacity=".55"/>
+                <circle cx="350" cy="207" r="5" fill="currentColor"/><circle cx="350" cy="207" r="13" stroke="currentColor" opacity=".28"/>
+                <circle cx="723" cy="244" r="5" fill="currentColor"/><circle cx="723" cy="244" r="13" stroke="currentColor" opacity=".28"/>
+                <circle cx="474" cy="400" r="4" fill="currentColor"/><circle cx="474" cy="400" r="12" stroke="currentColor" opacity=".28"/>
+            </svg>
+            <div class="entry-brand-content">
+                <header class="entry-brand">
+                    <img src="assets/shipintel-logo.png" alt="">
+                    <h1 id="entryBrandTitle">ShipIntel <span>AI</span></h1>
+                </header>
+                <span class="entry-brand-caption" data-i18n="entryBrandCaption">MARITIME OPERATIONS INTELLIGENCE</span>
+                <div class="entry-brand-rule"></div>
+                <p class="entry-brand-tagline" data-i18n="entryBrandTagline">منصة الذكاء الاصطناعي المتقدمة لإدارة وتخليص الشحنات البحرية واللوجستية</p>
+                <div class="entry-marine-readout" aria-hidden="true">
+                    <span class="entry-readout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15h18l-2 5H7l-4-5Z"/><path d="M7 15V8h10v7M10 8l2-4 2 4"/><path d="M3 22c2-1 3-1 5 0s3 1 5 0 3-1 5 0 3 1 5 0"/></svg></span>
+                    <span><strong data-i18n="entryReadoutTitle">ذكاء الشحن العالمي</strong><small data-i18n="entryReadoutCaption">رؤية · تخليص · تحكم</small></span>
+                </div>
             </div>
-        </header>
-        <main class="landing-main">
-            <section class="landing-hero">
-                <div class="landing-copy">
-                    <p class="landing-eyebrow" data-i18n="landingEyebrow">ذكاء بحري، ورؤية أوضح</p>
-                    <h1 class="landing-title"><span data-i18n="landingTitle">كل شحناتك،</span><span data-i18n="landingTitleAccent">في مسار واضح.</span></h1>
-                    <p class="landing-description" data-i18n="landingDescription">تابع حركة الشحنات والحاويات من المغادرة حتى الوصول، وأدر تفاصيل رحلاتك من لوحة واحدة.</p>
-                    <a class="landing-cta" href="dashboard.html" onclick="passLanguage(event)">
-                        <span data-i18n="landingCta">ابدأ الآن</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-                    </a>
-                    <p class="landing-footnote">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"></path><circle cx="12" cy="12" r="9"></circle></svg>
-                        <span data-i18n="landingFootnote">منصة واحدة لمتابعة عملياتك اللوجستية بثقة.</span>
-                    </p>
+            <div class="entry-brand-footer"><span>SHIPINTEL AI</span><span>MARITIME · LOGISTICS · INTELLIGENCE</span></div>
+        </section>
+        <section class="entry-login-panel" aria-labelledby="entryTitle">
+            <button class="language-toggle" type="button" data-language-toggle data-i18n="languageButton" data-i18n-aria-label="languageLabel">English</button>
+            <div class="entry-login-wrap">
+                <section class="entry-card">
+                    <header class="entry-card-heading">
+                        <h2 id="entryTitle" data-i18n="entryTitle">تسجيل الدخول</h2>
+                        <p data-i18n="entrySubtitle">بوابة عمليات التخليص والشحن والدعم اللوجستي</p>
+                    </header>
+                    <form id="entryAuthForm" novalidate>
+                        <label class="auth-field">
+                            <span data-i18n="entryUsername">اسم المستخدم</span>
+                            <input id="entryEmail" type="text" autocomplete="username" maxlength="254" required>
+                        </label>
+                        <label class="auth-field">
+                            <span data-i18n="entryPassword">كلمة المرور</span>
+                            <input id="entryPassword" type="password" autocomplete="current-password" minlength="8" maxlength="128" required>
+                        </label>
+                        <button class="primary-btn auth-submit" id="entrySubmit" type="submit" data-i18n="entryTitle">تسجيل الدخول</button>
+                    </form>
+                    <p class="auth-feedback" id="entryFeedback" role="status" aria-live="polite" hidden></p>
+                </section>
+                <div class="entry-login-support">
+                    <button class="auth-link" id="entryForgotPassword" type="button" data-i18n="entryForgotPassword">نسيت كلمة المرور؟</button>
                 </div>
-                <div class="visual-stage" aria-hidden="true">
-                    <div class="visual-glow"></div>
-                    <svg class="shipping-visual" viewBox="0 0 720 570" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="sea" x1="130" y1="420" x2="620" y2="420" gradientUnits="userSpaceOnUse"><stop stop-color="#0E7490" stop-opacity=".05"/><stop offset=".52" stop-color="#0EA5E9" stop-opacity=".23"/><stop offset="1" stop-color="#0E7490" stop-opacity=".04"/></linearGradient>
-                            <linearGradient id="hull" x1="250" y1="335" x2="535" y2="404" gradientUnits="userSpaceOnUse"><stop stop-color="#126B91"/><stop offset=".56" stop-color="#179BCC"/><stop offset="1" stop-color="#36C6E7"/></linearGradient>
-                            <linearGradient id="route" x1="176" y1="213" x2="551" y2="176" gradientUnits="userSpaceOnUse"><stop stop-color="#34D399"/><stop offset="1" stop-color="#38BDF8"/></linearGradient>
-                            <filter id="cardShadow" x="0" y="0" width="2" height="2" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="14"/></filter>
-                        </defs>
-                        <ellipse cx="370" cy="455" rx="267" ry="48" fill="#0284C7" fill-opacity=".08"/>
-                        <path d="M83 434C170 391 231 451 321 421C408 392 460 445 637 401V506H83V434Z" fill="url(#sea)"/>
-                        <path d="M86 460C186 424 236 480 344 447C460 411 508 465 638 430" stroke="#0EA5E9" stroke-opacity=".14" stroke-width="2"/>
-                        <path d="M111 222C203 150 265 272 367 205C457 147 511 201 603 143" stroke="#38BDF8" stroke-opacity=".2" stroke-width="2" stroke-dasharray="7 9"/>
-                        <path d="M158 220C240 177 286 244 351 212C427 175 467 187 548 148" stroke="url(#route)" stroke-width="2.5" stroke-dasharray="6 8"/>
-                        <circle cx="158" cy="220" r="7" fill="#34D399"/><circle cx="158" cy="220" r="14" stroke="#34D399" stroke-opacity=".25" stroke-width="2"/>
-                        <circle cx="548" cy="148" r="7" fill="#38BDF8"/><circle cx="548" cy="148" r="14" stroke="#38BDF8" stroke-opacity=".25" stroke-width="2"/>
-                        <g transform="translate(207 259)">
-                            <path d="M36 53H321L295 119C290 132 278 141 264 141H88C73 141 60 133 54 119L36 53Z" fill="url(#hull)" stroke="#53D4F0" stroke-opacity=".65" stroke-width="2"/>
-                            <path d="M37 57H319" stroke="#B6F3FF" stroke-opacity=".65" stroke-width="3"/>
-                            <path d="M87 52V16H143V52M146 52V5H204V52M207 52V23H260V52" fill="#123653" stroke="#4CC8E9" stroke-opacity=".7" stroke-width="2"/>
-                            <path d="M98 29H132M156 20H194M217 35H250" stroke="#38BDF8" stroke-opacity=".5" stroke-width="2"/>
-                            <path d="M63 160C78 151 88 169 103 160C118 151 128 169 143 160C158 151 168 169 183 160C198 151 208 169 223 160C238 151 248 169 263 160C278 151 288 169 303 160" stroke="#38BDF8" stroke-opacity=".42" stroke-width="2" stroke-linecap="round"/>
-                        </g>
-                        <g transform="translate(66 77)">
-                            <rect width="176" height="79" rx="13" fill="#132137" stroke="#32445D"/>
-                            <circle cx="22" cy="24" r="5" fill="#34D399"/>
-                            <text x="37" y="28" fill="#8EA0B8" font-family="Arial,sans-serif" font-size="11" data-svg-i18n="visualRoute">مسار الشحنة</text>
-                            <path d="M22 55H151" stroke="#2C3D54" stroke-width="5" stroke-linecap="round"/>
-                            <path d="M22 55H117" stroke="#38BDF8" stroke-width="5" stroke-linecap="round"/>
-                            <circle cx="119" cy="55" r="6" fill="#38BDF8"/>
-                        </g>
-                        <g transform="translate(455 290)">
-                            <rect width="190" height="84" rx="14" fill="#101B2D" stroke="#2D405A"/>
-                            <rect x="15" y="16" width="34" height="34" rx="10" fill="#0C3446"/>
-                            <path d="M23 38L30 30L36 34L43 24" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <text x="60" y="29" fill="#8EA0B8" font-family="Arial,sans-serif" font-size="10" data-svg-i18n="visualVessel">سفينة شحن · في عرض البحر</text>
-                            <text x="60" y="49" fill="#E7F1FC" font-family="Arial,sans-serif" font-size="13" font-weight="bold">MSKU-982341</text>
-                            <rect x="15" y="63" width="160" height="4" rx="2" fill="#293B53"/>
-                            <rect x="15" y="63" width="104" height="4" rx="2" fill="#34D399"/>
-                        </g>
-                        <g transform="translate(410 92)">
-                            <rect width="194" height="76" rx="13" fill="#132137" stroke="#32445D"/>
-                            <text x="16" y="25" fill="#8396AE" font-family="Arial,sans-serif" font-size="10" data-svg-i18n="visualArriving">الوصول المتوقع</text>
-                            <text x="16" y="51" fill="#E7F1FC" font-family="Arial,sans-serif" font-size="15" font-weight="bold">02 NOV 2026</text>
-                            <rect x="133" y="15" width="48" height="21" rx="10" fill="#0A3D35"/>
-                            <text x="157" y="29" text-anchor="middle" fill="#6EE7B7" font-family="Arial,sans-serif" font-size="9" data-svg-i18n="visualOnTime">على المسار</text>
-                        </g>
-                    </svg>
-                </div>
-            </section>
-            <section class="landing-section" id="routes" aria-labelledby="mapTitle">
-                <div class="landing-section-heading">
-                    <p class="landing-eyebrow" data-i18n="landingMapEyebrow">رؤية تشغيلية أوضح</p>
-                    <h2 id="mapTitle" data-i18n="landingMapTitle">المسارات البحرية، في لمحة واحدة</h2>
-                    <p data-i18n="landingMapDescription">تصوّر توضيحي لمسارات الشحن ونقاط العبور ومؤشرات الوصول، ضمن تجربة موحّدة لإدارة العمليات.</p>
-                </div>
-                <div class="map-card">
-                    <div class="map-canvas">
-                        <span class="map-demo-label" data-i18n="mapDemoLabel">خريطة توضيحية · بيانات تجريبية</span>
-                        <svg viewBox="0 0 760 390" fill="none" role="img" aria-label="خريطة توضيحية لمسار بحري" data-i18n-aria-label="mapAriaLabel">
-                            <defs>
-                                <linearGradient id="mapRoute" x1="120" y1="112" x2="638" y2="281" gradientUnits="userSpaceOnUse"><stop stop-color="#34D399"/><stop offset=".52" stop-color="#38BDF8"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
-                                <filter id="mapGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                            </defs>
-                            <g fill="#17314A" stroke="#274664" stroke-width="1.3" opacity=".88">
-                                <path d="m86 92 29-24 37 4 14 17 32 2 12 18-19 17-9 28-25 9-12 27-24 8-15-13-4-28-18-17 3-23-17-25Z"/>
-                                <path d="m157 203 25 8 17 24-7 27 17 22-7 30-18 28-13-7-8-35-18-25 3-30-13-22 22-20Z"/>
-                                <path d="m300 99 24-15 37 6 14 17 31 1 19 16 28-2 20 13-8 18-24 8-11 20-28 1-14 18-34-6-20-18-25 7-17-15-25-4-17-24 17-21 19-13-6-15Z"/>
-                                <path d="m364 215 31-6 22 13 10 25-12 22-9 37-18 31-14-14-8-34-16-25 1-27-11-13 24-9Z"/>
-                                <path d="m469 116 28-18 33 10 19-4 23 17 35-2 13 18-9 19-29 7-17 20-25 2-21 18-28-12-16-25-20-3-9-24 17-23Z"/>
-                                <path d="m557 218 27-15 35 8 14 18 32 7 16 21-20 21-37 1-21 18-36-5-16-21-27-6 5-26 28-21Z"/>
-                            </g>
-                            <path d="M115 113C219 77 277 145 350 170C443 202 486 165 553 197C594 216 616 245 650 278" stroke="#38BDF8" stroke-opacity=".15" stroke-width="10" stroke-linecap="round"/>
-                            <path d="M115 113C219 77 277 145 350 170C443 202 486 165 553 197C594 216 616 245 650 278" stroke="url(#mapRoute)" stroke-width="2.5" stroke-dasharray="8 9" stroke-linecap="round"/>
-                            <path d="M350 170C390 188 414 206 434 245" stroke="#38BDF8" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="4 7"/>
-                            <g filter="url(#mapGlow)">
-                                <circle cx="115" cy="113" r="6" fill="#34D399"/><circle cx="350" cy="170" r="5" fill="#38BDF8"/>
-                                <circle cx="434" cy="245" r="5" fill="#38BDF8"/><circle cx="650" cy="278" r="7" fill="#A78BFA"/>
-                            </g>
-                            <g fill="#B9C9DA" font-family="Arial,sans-serif" font-size="10">
-                                <text x="92" y="96" data-svg-i18n="mapOriginShanghai">شنغهاي</text>
-                                <text x="327" y="152" data-svg-i18n="mapStopSingapore">سنغافورة</text>
-                                <text x="410" y="229" data-svg-i18n="mapStopJeddah">جدة</text>
-                                <text x="626" y="260" data-svg-i18n="mapDestinationAden">عدن</text>
-                            </g>
-                            <g transform="translate(468 91)">
-                                <circle cx="16" cy="16" r="15" fill="#10273A" stroke="#2F526D"/>
-                                <path d="m9 21 5-10 3 6 5-2-7 9-2-6-4 3Z" fill="#67D9F8"/>
-                            </g>
-                        </svg>
-                    </div>
-                    <aside class="map-legend">
-                        <div><div class="map-legend-label" data-i18n="mapActiveRoute">مسار نشط</div><div class="map-legend-value" data-i18n="mapDemoLabel">خريطة توضيحية · بيانات تجريبية</div></div>
-                        <div><div class="map-legend-label" data-i18n="visualVessel">سفينة شحن · في عرض البحر</div><div class="map-legend-value">MSKU-982341 <small>· Maersk</small></div></div>
-                        <div><div class="map-legend-label" data-i18n="visualArriving">الوصول المتوقع</div><div class="map-legend-value">02 Nov 2026</div></div>
-                        <div><span class="map-status" data-i18n="visualOnTime">على المسار</span></div>
-                    </aside>
-                </div>
-            </section>
-            <section class="landing-section" id="pricing" aria-labelledby="pricingTitle">
-                <div class="landing-section-heading">
-                    <p class="landing-eyebrow" data-i18n="pricingEyebrow">خطط مرنة</p>
-                    <h2 id="pricingTitle" data-i18n="pricingTitle">اختر نقطة انطلاقك</h2>
-                    <p data-i18n="pricingDescription">باقات مقترحة لمراحل مختلفة من نمو عملياتك اللوجستية.</p>
-                </div>
-                <div class="pricing-grid">
-                    <article class="pricing-card">
-                        <h3 data-i18n="planStarter">الاستكشاف</h3>
-                        <p class="pricing-description" data-i18n="planStarterDescription">ابدأ بتنظيم شحناتك في لوحة واحدة.</p>
-                        <div class="pricing-price"><span data-i18n="planFree">مجانًا</span></div>
-                        <ul class="pricing-features">
-                            <li data-i18n="planDemoFeature">إدارة الشحنات يدويًا</li>
-                            <li data-i18n="planBasicTracking">بحث وتتبع من البيانات المسجلة</li>
-                            <li data-i18n="planCsvFeature">تصدير تقارير CSV</li>
-                        </ul>
-                        <a class="landing-cta" href="dashboard.html" onclick="passLanguage(event)" data-i18n="choosePlan">ابدأ الآن</a>
-                    </article>
-                    <article class="pricing-card featured">
-                        <h3 data-i18n="planGrowth">النمو</h3>
-                        <p class="pricing-description" data-i18n="planGrowthDescription">أدوات متابعة إضافية للفرق النامية.</p>
-                        <div class="pricing-price">$29 <small data-i18n="planMonth">/ شهريًا</small></div>
-                        <ul class="pricing-features">
-                            <li data-i18n="planDemoFeature">إدارة الشحنات يدويًا</li>
-                            <li data-i18n="planBasicTracking">بحث وتتبع من البيانات المسجلة</li>
-                            <li data-i18n="planTeamFeature">مساحة عمل للفريق</li>
-                        </ul>
-                        <a class="landing-cta" href="dashboard.html" onclick="passLanguage(event)" data-i18n="choosePlan">ابدأ الآن</a>
-                    </article>
-                    <article class="pricing-card">
-                        <h3 data-i18n="planEnterprise">المؤسسات</h3>
-                        <p class="pricing-description" data-i18n="planEnterpriseDescription">حلول مخصصة للعمليات واسعة النطاق.</p>
-                        <div class="pricing-price" data-i18n="planQuote">حسب الطلب</div>
-                        <ul class="pricing-features">
-                            <li data-i18n="planTeamFeature">مساحة عمل للفريق</li>
-                            <li data-i18n="planAnalyticsFeature">تحليلات تشغيلية متقدمة</li>
-                            <li data-i18n="planSupportFeature">دعم وتكاملات مخصصة</li>
-                        </ul>
-                        <a class="landing-cta" href="dashboard.html" onclick="passLanguage(event)" data-i18n="choosePlan">استكشف النظام</a>
-                    </article>
-                </div>
-                <p class="pricing-disclaimer" data-i18n="pricingDisclaimer">هذه الباقات والأسعار استرشادية لعرض الفكرة فقط؛ لا توجد حاليًا اشتراكات أو مدفوعات مفعّلة.</p>
-            </section>
-            <footer class="landing-bottom">
-                <strong>ShipIntel AI</strong>
-                <a href="index.html" data-i18n="backToTop">العودة إلى الأعلى</a>
-                <span>© 2026 ShipIntel AI</span>
-            </footer>
-        </main>
-    </section>
+                <p class="copyright-notice" data-i18n="copyrightNotice">جميع الحقوق محفوظة © 2026 ShipIntel AI. إحدى خدمات تيك زون للحلول التقنية (TechZone Solutions). لا يُسمح بنسخ أو استنساخ أو إعادة توزيع أي جزء من هذه المنصة أو برمجياتها دون إذن خطي مسبق.</p>
+            </div>
+        </section>
+    </main>
+    <script src="assets/contact-config.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="assets/supabase-config.js" defer></script>
+    <script src="backend.js" defer></script>
     <script src="app.js" defer></script>
+    <script src="entry.js" defer></script>
 </body>
 </html>
