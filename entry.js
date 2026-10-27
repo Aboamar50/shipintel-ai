@@ -142,17 +142,11 @@
         }
         try {
             const { user } = await backend.initialize();
-            if (user) await redirectIfAuthorized(user)
-} catch (error) {
-    showServiceError(error);
-    // submitButton.disabled = true;
-    // resetButton.disabled = true;
-}
-            
-            
-        
-        
-    
+            if (user) await redirectIfAuthorized(user);
+        } catch (error) {
+            showServiceError(error);
+        }
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
         void initialize();
