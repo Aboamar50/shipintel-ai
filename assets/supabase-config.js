@@ -1,4 +1,4 @@
 window.SHIPINTEL_SUPABASE_CONFIG = Object.freeze({
-    url: 'YOUR_SUPABASE_PROJECT_URL',
-    anonKey: 'YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY'
+    url: 'https://rdcywiueeevjbbaxfru.supabase.co',
+    anonKey: 'sb_publishable__ZXP7tcRs9YL01hCmFeO2Q_j2f39jsP'
 });
